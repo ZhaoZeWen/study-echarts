@@ -1,0 +1,28 @@
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd,td,tr{
+    /* 默认有边距，都要清除 */
+    margin: 0;
+    padding: 0;
+    /*字体设置*/
+    font-size: 14px;
+    font-family: "Microsoft Yahei",sans-serif;
+    /* 去掉列表的原点 */
+    list-style: none;
+    /* 默认鼠标 */
+    cursor: default;
+    text-decoration:none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+table{
+    /*边框合并*/
+    border-collapse:collapse;
+    border-spacing:0;
+}
+#dash-board{
+    width: 260px;
+    height: 260px;
+    background-color:#306290;
+    margin: 0 auto;
+}

@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF—8">
+  <meta http—equiv="X—UA—Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/p-100.css">
+</head>
+<body style="overflow-x: hidden;overflow-y: hidden;margin: 0">
+  <div id="demo" style="overflow-x: hidden;overflow-y: hidden">
+      <!-- table区域 -->
+    <div id="main" >
+    </div>
+    <!-- 饼状图区域 -->
+    <div id="pie">
+    </div>
+  </div>
+  <script src="js/echarts.js"></script>
+  <script type="text/javascript">
+    function eZCallBackJs(Info)
+    {
+      //alert(Info);
+       Info='{"guid":"23#井","propSet":[{"attrs":[{"attr":"1.1 - Molar Flow","val":"2446.65506"},{"attr":"unit","val":"[m3/d]"}],"group":"23号井进站流量"},{"attrs":[{"attr":"1.1 - Temperature","val":"48.6736"},{"attr":"unit","val":"[C]"}],"group":"23号井进站温度"},{"attrs":[{"attr":"1.1 - Pressure","val":"110.206"},{"attr":"unit","val":"[bar_g]"}],"group":"23号井进站压力"},{"attrs":[{"attr":"1.1 - Master Comp Mole Frac (C6+*)","val":"0.0012"},{"attr":"1.1 - Master Comp Mole Frac (CO2)","val":"0.0055"},{"attr":"1.1 - Master Comp Mole Frac (Ethane)","val":"0.0176"},{"attr":"1.1 - Master Comp Mole Frac (H2O)","val":"0.00750002"},{"attr":"1.1 - Master Comp Mole Frac (Methane)","val":"0.9584"},{"attr":"1.1 - Master Comp Mole Frac (Nitrogen)","val":"0.0041"},{"attr":"1.1 - Master Comp Mole Frac (Propane)","val":"0.0039"},{"attr":"1.1 - Master Comp Mole Frac (TEGlycol)","val":"0"},{"attr":"1.1 - Master Comp Mole Frac (i-Butane)","val":"0.001"},{"attr":"1.1 - Master Comp Mole Frac (i-Pentane)","val":"0.0002"},{"attr":"1.1 - Master Comp Mole Frac (n-Butane)","val":"0.0005"},{"attr":"1.1 - Master Comp Mole Frac (n-Pentane)","val":"0.0001"},{"attr":"unit","val":"[]"}],"group":"23号井进站组分"}]}'
+      var jsData = eval('(' + Info + ')');
+      //alert(jsData.guid);
+      var data=[];
+      //  var tit="";    //饼图标题
+      var html="<table><thead><tr><th colspan='2'>"+jsData.guid+"</tr></th></thead>";
+      for(var i=0;i<jsData.propSet.length;i++){
+          if(jsData.propSet[i].attrs.length>2){
+              // tit=jsData.sta.data[i].group;     //饼图标题
+              for(var j=0;j<jsData.propSet[i].attrs.length;j++){
+                var d = {};
+                d.name=jsData.propSet[i].attrs[j].attr;
+                d.value=jsData.propSet[i].attrs[j].val;
+                data.push(d);
+              }
+            }else{
+              html+="<tbody><tr><td>"+jsData.propSet[i].group+":</td><td>"+jsData.propSet[i].attrs[0].val+""+jsData.propSet[i].attrs[1].val+"</td></tr></tbody>";
+            }
+          }
+      html+="</table>";
+      console.log(data)
+      // $("#main").html(html);     //引入jq用到的方法(方法同下)
+      // 原生获得html方法
+      document.getElementById('main').innerHTML=html;
+      // 饼状图逻辑
+      var myChant = echarts.init(document.getElementById('pie'));   //基于准备好的dom，初始化echarts实例
+      var option = {
+      title : {
+          // text: tit,
+          top :'7%',
+          x:'center',
+          textStyle: {
+            color :'orange'
+          }
+      },
+      // 鼠标放上去有提示
+      // tooltip : {
+      //     trigger: 'item',
+      //     formatter: "{a} <br/>{b} : {c} ({d}%)"
+      // },
+      // 侧边栏指示
+      // legend: {     
+      //     orient: 'vertical',
+      //     left: 'left',
+      //     data: data
+      // },
+      series : [
+          {
+          //   name: tit,
+            type: 'pie',
+            radius : '20%',
+            center: ['50%', '50%'],
+            data:data,
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }
+          ]
+        };
+      myChant.setOption(option);
+      window.onload=function(){
+    alert(document.getElementById('demo').offsetHeight);
+    alert(document.getElementById('demo').offsetWidth);}
+    }
+    var Info = '';
+    eZCallBackJs(Info);
+  </script>
+</body>
+</html>

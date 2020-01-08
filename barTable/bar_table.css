@@ -1,0 +1,75 @@
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd,td,tr{
+  /* 默认有边距，都要清除 */
+  margin: 0;
+  padding: 0;
+  /*字体设置*/
+  font-size: 14px;
+  font-family: "Microsoft Yahei",sans-serif;
+  /* 去掉列表的原点 */
+  list-style: none;
+  /* 默认鼠标 */
+  cursor: default;
+  text-decoration:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+table{
+  /*边框合并*/
+  border-collapse:collapse;
+  border-spacing:0;
+}
+#main{
+  width: 800px;
+  margin: 0 auto;
+}
+/* table样式 */
+#main_table table{
+  width: 800px;
+  font-size: 14px;
+  border-collapse: collapse;
+  padding-top: 5px;
+  margin-bottom: 20px;
+}
+#main_table table tr,td{
+  width: 300px;
+  height: 20px;
+  box-sizing: border-box;
+  padding: 3px 0;
+  border: 1px solid #000;
+}
+#main_table table thead tr{
+  text-align: center;
+  font-size: 18px;
+}
+#main_table table tbody tr{
+  font-size: 14px;
+  width: 150px;
+  height: 20px;
+  padding-left: 15px;
+}
+#main_table table tbody tr td{
+  width: 150px;
+  height: 20px;
+  text-align: left;
+  padding-left: 15px;
+  word-break:break-all;
+}
+/* 柱状图样式 */
+#bar{
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+}
+#main_bar,#main_bar1{
+    margin: 20px 0;
+}
+#main_bar,#main_bar1,#main_bar2,#main_bar3{
+  width: 370px;
+  height: 300px;
+  border-radius: 10px;
+  border: 3px solid red;
+  padding: 0 5px;
+  box-shadow: 4px 3px 1px #888888;
+}

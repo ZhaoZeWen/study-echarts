@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bar_table</title>
+    <link rel="stylesheet" href="bar_table.css">
+    <style>
+        #dialog{
+            width: 100px;
+            /* height: 200px; */
+            /* background-color: royalblue; */
+            position: absolute;
+            top: 10%;
+            right: 2%;
+            z-index: 99;
+        }
+        #change-dialog{
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <!-- table区域 -->
+        <div id="main_table">
+        </div>
+
+        <!-- 柱状图区域 -->
+        <div id="bar">
+            <div id="bar_one" style="position: relative;">
+                <div id="dialog">
+                    <select name="" id="change-dialog">
+                        <option value="SF">SF</option>
+                        <option value="FS">FS</option>
+                        <option value="QS">QS</option>
+                        <option value="SQ">SQ</option>
+                        <option value="SS">SS</option>
+                    </select>
+                </div>
+                <!-- 作业时间 -->
+                <div id="main_bar">
+                </div>
+                <!-- 集体受照剂量 -->
+                <div id="main_bar2">
+                </div>
+                <!-- 最高辐射剂量 -->
+                <!-- <div id="main_bar4">
+                </div> -->
+
+            </div>
+            <div id="bar_two">
+
+                <!-- 人员数量 -->
+                <div id="main_bar1">
+                </div>
+                <!-- 碰撞次数 -->
+                <div id="main_bar3">
+                </div>
+   
+            </div>  
+        </div>
+    </div>
+    <script src="echart/js/echarts.js"></script>
+    <script>
+        function showProject(Info){
+            var Info= '{"projects": [{"name": "方案1","time": "100","man": "5","collectiveDose": "123","maxDose": "233","collision": "23"},{"name": "方案2","time": "120","man": "6","collectiveDose": "233","maxDose": "444","collision": "22"},{"name": "方案3","time": "80","man": "8","collectiveDose": "444","maxDose": "222","collision": "10"}]}';
+            var jsonData = eval('('+ Info+')');
+            var name = [];
+            var time = [];
+            var man = [];
+            var collectiveDose = [];
+            var maxDose = [];
+            var collision = [];
+            var maxDose = [];
+            // table拼接
+            var html="<table><thead><tr><th>"+"方案(Project)"+"</th><th>"+"时间(Time)"+"</th><th>"+"人员数量(Man/hour)"+"</th><th>"+"集体受照量(Collective.Dose)"+"</th><th>"+"最高辐射剂量(Max.Dose)"+"</th><th>"+"碰撞次数(Collision)"+"</th></tr></thead>";
+            for(var i=0;i<jsonData.projects.length;i++){
+                var obj = {};
+                obj.name=jsonData.projects[i].name;
+                obj.time=jsonData.projects[i].time;
+                obj.man=jsonData.projects[i].man;
+                obj.collectiveDose=jsonData.projects[i].collectiveDose;
+                obj.maxDose=jsonData.projects[i].maxDose;
+                obj.collision=jsonData.projects[i].collision;
+                name.push(obj.name);
+                time.push(obj.time);
+                man.push(obj.man);
+                collectiveDose.push(obj.collectiveDose);
+                maxDose.push(obj.maxDose);
+                collision.push(obj.collision);
+                html+="<tbody><tr><td>"+obj.name+"</td><td>"+obj.time+"</td><td>"+obj.man+"</td><td>"+obj.collectiveDose+"</td><td>"+obj.maxDose+"</td><td>"+obj.collision+"</td></tr></tbody>";
+            }
+            html+="</table>";
+            document.getElementById('main_table').innerHTML=html;
+
+            // 作业时间柱状图
+            function callbackJson( Info ){
+                // 初始化图表
+                var myChart = echarts.init(document.getElementById("main_bar"));
+                var option = {
+                    title : {
+                        text: '作业时间',
+                        left: 'center',
+                        top: 10,
+                        textStyle: {
+                            color: "red",
+                            fontSize: 25
+                        }
+                    },
+                    // 图例配置
+                    tooltip: {
+                        trigger: 'item',
+                    },
+                    // 鼠标hover时高亮样式
+                    emphasis : {
+                        itemStyle : {
+                            // 高亮时点的颜色。
+                            color : "blue"
+                        },
+                        label : {
+                            show: true,
+                        }
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            axisTick: {show: false},
+                            data: name
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name : '所需并行作业时间/min',
+                            nameLocation : 'center',
+                            nameGap:23,
+                        }
+                    ],
+                    dataset : [{
+                        dimensions: ['product', 'name'],
+                        // 按列的 key-value 形式。
+                        source: {
+                            'product': name,
+                            'count': time,
+                            'score': time
+                        }
+                    }],
+                    series : [
+                        {
+                            // name:name,
+                            type:'bar',
+                            // data:time,
+                            // barWidth: '30px', 
+                            // barGap: '0',
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            }
+            callbackJson( Info );
+
+            // 人员数量柱状图
+            function callbackJson1( Info ){
+                var myChart1 = echarts.init(document.getElementById("main_bar1"));
+                var option = {
+                    title : {
+                        text: '人员数量',
+                        left: 'center',
+                        top: 10,
+                        textStyle: {
+                            color: "red",
+                            fontSize: 25
+                        }
+                    },
+                    // 图例配置
+                    tooltip : {
+                        trigger: 'item',
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data: name
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name : '所需人员数量/个',
+                            nameLocation : 'center',
+                            nameGap:23,
+                        }
+                    ],
+                    series : [
+                        {
+                            name:name,
+                            type:'bar',
+                            data:man,
+                            barWidth: '30px', 
+                            barGap: '0',
+                        }
+                    ],
+                    // 数据区域缩放组件dataZoom
+                    dataZoom: [
+                        {
+                            type: 'slider',
+                            xAxisIndex: 0,
+                            start: 10,
+                            end: 100
+                        },
+                        {
+                            type: 'inside',
+                            xAxisIndex: 0,
+                            start: 10,
+                            end: 100
+                        },
+                        {
+                            type: 'slider',
+                            yAxisIndex: 0,
+                            start: 30,
+                            end: 100
+                        },
+                        {
+                            type: 'inside',
+                            yAxisIndex: 0,
+                            start: 30,
+                            end: 100
+                        }
+                    ],
+                };
+                myChart1.setOption(option);
+                myChart1.on('click', function (params) {
+                    console.log(params)
+                    window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name));
+                });
+            }
+            callbackJson1( Info );
+
+            // 集体受照剂量柱状图
+            function callbackJson2( Info ){
+                var myChart2 = echarts.init(document.getElementById("main_bar2"));
+                var option = {
+                    title : {
+                        text: '集体受照剂量',
+                        left: 'center',
+                        top: 10,
+                        textStyle: {
+                            color: "red",
+                            fontSize: 25
+                        }
+                    },
+                    // 图例配置
+                    tooltip: {
+                        trigger: 'item',
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data: name
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name : '人员总受照剂量/mSv',
+                            nameLocation : 'center',
+                            nameGap:25,
+                        }
+                    ],
+                    series : [
+                        {
+                            name:name,
+                            type:'bar',
+                            data:collectiveDose,
+                            barWidth: '30px', 
+                            barGap: '0',
+                        },
+                    ]
+                };
+                myChart2.setOption(option);
+            }
+            callbackJson2( Info );
+
+            // 碰撞次数柱状图
+            function callbackJson3( Info ){
+                var myChart3 = echarts.init(document.getElementById("main_bar3"));
+                var option = {
+                    title : {
+                        text: '碰撞次数',
+                        left: 'center',
+                        top: 10,
+                        textStyle: {
+                            color: "red",
+                            fontSize: 25
+                        }
+                    },
+                    // 图例配置
+                    tooltip: {
+                        trigger: 'item',
+                    },
+                    // x轴
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data: name
+                        }
+                    ],
+                    // y轴
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name : '碰撞次数/次',
+                            nameLocation : 'center',
+                            nameGap:23,
+                        }
+                    ],
+                    // 柱状图
+                    series : [
+                        {
+                            name:name,
+                            type:'bar',
+                            data:collision,
+                            barWidth: '30px',
+                            barGap: '0',
+                        },
+                    ]
+                };
+                myChart3.setOption(option);
+            }
+            callbackJson3( Info );
+
+            // 最高辐射剂量
+            // function callbackJson4( Info ){
+            //     var myChart4 = echarts.init(document.getElementById("main_bar4"));
+            //     var option = {
+            //         title : {
+            //             text: '最高辐射剂量',
+            //             left: 'center',
+            //             top: 10,
+            //             textStyle: {
+            //                 color: "red",
+            //                 fontSize: 25
+            //             }
+            //         },
+            //         // 图例配置
+            //         tooltip: {
+            //             trigger: 'item',
+            //         },
+            //         // x轴
+            //         xAxis : [
+            //             {
+            //                 type : 'category',
+            //                 data: name
+            //             }
+            //         ],
+            //         // y轴
+            //         yAxis : [
+            //             {
+            //                 type : 'value',
+            //                 name : '最高辐射剂量/mSV',
+            //                 nameLocation : 'center',
+            //                 nameGap:23,
+            //             }
+            //         ],
+            //         // 柱状图
+            //         series : [
+            //             {
+            //                 name:name,
+            //                 type:'bar',
+            //                 data:maxDose,
+            //                 barWidth: '30px',
+            //                 barGap: '0',
+            //             },
+            //         ]
+            //     };
+            //     myChart4.setOption(option);
+            // }
+            // callbackJson4( Info );
+        }
+        var Info = "";
+        showProject(Info);
+    </script>
+</body>
+</html>

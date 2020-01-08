@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>剂量评估</title>
+    <link rel="stylesheet" href="css/main-set.min.css">
+    <link rel="stylesheet" href="css/easyui.css">
+    <link rel="stylesheet" href="css/colpick.css">
+</head>
+<body>
+    <div id="main">
+        <!-- table区域 -->
+        <div id="main-table">
+        </div>
+        <!-- 折线图区域 -->
+        <div id="main-container">
+            <div class="main-set">
+                <p class="title">
+                    <span>操作面板设置</span>
+                    <img src="images/close_about.png" alt="关闭" class="close">
+                </p>
+                <!-- 调色面板 -->
+                <div id="color-div">
+                </div>
+                <!-- 设置线条宽度 -->
+                <div id="dialog-width">曲线线宽:
+                    <input type="number" name="曲线线宽" id="change-dialog-width" placeholder="请输入数字" oninput="if(value>10)value=10;if(value<0)value=0">
+                </div>
+                <!-- 设置线条线型 -->
+                <!-- <div id="dialog-type">曲线类型:
+                    <select name="" id="change-dialog-type">
+                        <option value="实线" selected="selected">实线</option>
+                        <option value="虚线">虚线</option>
+                        <option value="点划线">点划线</option>
+                    </select>
+                </div> -->
+
+                <!-- 设置线条线型 -->
+                <div id="icon-line">
+                    <input id="icon" class="easyui-combobox"  data-options="
+                            showItemIcon: true,
+                            data: [
+                                {value:'实线',text:'实线',iconCls:'icon-line-solid'},
+                                {value:'虚线',text:'虚线',iconCls:'icon-line-dashed'},
+                                {value:'点划线',text:'点划线',iconCls:'icon-line-dotted'}
+                            ],
+                            editable: false,
+                            panelHeight: 'auto',
+                            label: '曲线类型:',
+                            labelPosition: 'right',
+                            ">
+                </div>
+            </div>
+            <!-- 折线图 -->
+            <div id="main-bar">
+            </div> 
+        </div>
+    </div>
+    <script src="js/echarts.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easyui.min.js"></script>
+    <script src="js/colpick.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

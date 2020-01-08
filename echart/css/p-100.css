@@ -1,0 +1,69 @@
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dt,dd,td,tr{
+  /* 默认有边距，都要清除 */
+  margin: 0;
+  padding: 0;
+  /*字体设置*/
+  font-size: 14px;
+  font-family: "Microsoft Yahei",sans-serif;
+  /* 去掉列表的原点 */
+  list-style: none;
+  /* 默认鼠标 */
+  cursor: default;
+  text-decoration:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+table{
+  /*边框合并*/
+  border-collapse:collapse;
+  border-spacing:0;
+}
+#demo{
+  width: 550px;
+  background-color:#306290;
+  margin: 0 auto;
+}
+/* 弹窗table样式 */
+#main table{
+  width: 550px;
+  font-size: 14px;
+  color: rgb(237, 125, 52, 1);
+  border-collapse: collapse;
+  padding-top: 5px;
+}
+#main table tr,td{
+  width: 300px;
+  height: 20px;
+  box-sizing: border-box;
+  padding: 3px 0;
+}
+#main table thead tr{
+  text-align: center;
+  font-size: 18px;
+}
+#main table tbody tr{
+  font-size: 14px;
+  width: 150px;
+  height: 20px;
+}
+#main table tbody tr td:nth-child(1){
+  width: 150px;
+  height: 20px;
+  text-align: left;
+  padding-left: 15px;
+  word-break:break-all;
+}
+#main table tbody tr td:nth-child(2){
+  width: 150px;
+  height: 20px;
+  word-break:break-all;
+  padding-left: 5px;
+  text-align: center;
+}
+/* 饼状图样式 */
+#pie{
+  width: 550px;
+  height: 150px;
+}

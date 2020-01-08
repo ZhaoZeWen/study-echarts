@@ -1,0 +1,10 @@
+/* 新增线型图标 */
+.icon-line-dashed{
+	background:url('../images/dashed_small.png') no-repeat center center;
+}
+.icon-line-dotted{
+	background:url('../images/dotted_small.png') no-repeat center center;
+}
+.icon-line-solid{
+	background:url('../images/solid_small.png') no-repeat center center;
+}
